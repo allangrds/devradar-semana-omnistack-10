@@ -41,3 +41,16 @@ Sua aplicação React iniciará, e será feito uma request para sua api através
 1. Se você estiver usando um emulador em seu computador, clique no botão "Run on Android device/emulator";
 
 1. Se você estiver usando seu celular, instale o aplicativo "Expo", e use-o para ler o QR Code presente na página aberta ao rodar o comando "yarn start".
+
+
+![Captura de tela de 2020-01-16 20-00-52](https://user-images.githubusercontent.com/4103305/72570394-8c1cb780-389b-11ea-8b98-c1d52f19bd7a.png)
+
+![Captura de tela de 2020-01-16 20-00-54](https://user-images.githubusercontent.com/4103305/72570398-8d4de480-389b-11ea-8c72-50ae2c4f74d7.png)
+
+![Captura de tela de 2020-01-16 20-00-32](https://user-images.githubusercontent.com/4103305/72570400-8f17a800-389b-11ea-9205-26f2a84b2a6b.png)
+
+![Captura de tela de 2020-01-16 20-00-40](https://user-images.githubusercontent.com/4103305/72570404-90e16b80-389b-11ea-8b49-bd72cd183675.png)
+
+![Captura de tela de 2020-01-16 20-00-46](https://user-images.githubusercontent.com/4103305/72570417-976fe300-389b-11ea-88b4-d1593e1643b4.png)
+
+
