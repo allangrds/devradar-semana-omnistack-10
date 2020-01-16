@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: #E5E6F0;
+}
+
+body,
+input,
+button {
+  font-family: Roboto, sans-serif;
+}
