@@ -1,103 +1,67 @@
-import React, { useEffect } from 'react';
-import './assets/styles/global.css';
+import React, { useEffect, useState } from 'react'
+import AppContainer from './ui/containers/App'
+import api from './utils/services/api'
 
-function App() {
+const App = () => {
+  const [latitude, setLatitude] = useState('')
+  const [longitude, setLongitude] = useState('')
+  const [devs, setDevs] = useState([])
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position)
+        const {
+          latitude: latitudeFromBrowser,
+          longitude: longitudeFromBrowser,
+        } = position.coords
+
+        setLatitude(latitudeFromBrowser)
+        setLongitude(longitudeFromBrowser)
       },
       (error) => {
-        console.log(error);
+        console.log(error)
       },
       {
         timeout: 3000,
-      }
-    );
-  }, []);
+      },
+    )
+  }, [])
+
+  useEffect(() => {
+    async function loadDevs () {
+      const response = await api.get('/devs')
+
+      setDevs(response.data)
+    }
+
+    loadDevs()
+  }, [])
+
+  async function handleSubmit (data) {
+    const { githubUsername, techs } = data
+    const response = await api.post('/devs', {
+      github_username: githubUsername,
+      latitude,
+      longitude,
+      techs,
+    })
+
+    setDevs([
+      ...devs,
+      response.data,
+    ])
+  }
 
   return (
-    <div id="app">
-      <aside>
-        <strong>Cadastrar</strong>
-        <form>
-          <div className="input-block">
-            <label htmlFor="github_username">Usuário do Github</label>
-            <input name="github_username" id="github_username" required />
-          </div>
-
-          <div className="input-block">
-            <label htmlFor="techs">Tecnologias</label>
-            <input name="techs" id="techs" required />
-          </div>
-
-          <div className="input-group">
-            <div className="input-block">
-              <label htmlFor="latitude">Latitude</label>
-              <input name="latitude" id="latitude" required />
-            </div>
-
-            <div className="input-block">
-              <label htmlFor="longitude">Longitude</label>
-              <input name="longitude" id="longitude" required />
-            </div>
-          </div>
-
-          <button type="submit">Salvar</button>
-        </form>
-      </aside>
-
-      <main>
-        <ul>
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars1.githubusercontent.com/u/4103305?s=460&v=4" alt=""/>
-              <div className="user-info">
-                <strong>Allan Ramos</strong>
-                <span>Javascript, React</span>
-              </div>
-            </header>
-            <p>Biografia muito loca!</p>
-            <a href="github.com/">Acessar perfil no Github</a>
-          </li>
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars1.githubusercontent.com/u/4103305?s=460&v=4" alt=""/>
-              <div className="user-info">
-                <strong>Allan Ramos</strong>
-                <span>Javascript, React</span>
-              </div>
-            </header>
-            <p>Biografia muito loca!</p>
-            <a href="github.com/">Acessar perfil no Github</a>
-          </li>
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars1.githubusercontent.com/u/4103305?s=460&v=4" alt=""/>
-              <div className="user-info">
-                <strong>Allan Ramos</strong>
-                <span>Javascript, React</span>
-              </div>
-            </header>
-            <p>Biografia muito loca!</p>
-            <a href="github.com/">Acessar perfil no Github</a>
-          </li>
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars1.githubusercontent.com/u/4103305?s=460&v=4" alt=""/>
-              <div className="user-info">
-                <strong>Allan Ramos</strong>
-                <span>Javascript, React</span>
-              </div>
-            </header>
-            <p>Biografia muito loca!</p>
-            <a href="github.com/">Acessar perfil no Github</a>
-          </li>
-
-        </ul>
-      </main>
-    </div>
-  );
+    <AppContainer
+      handleSubmit={handleSubmit}
+      latitude={latitude}
+      setLatitude={setLatitude}
+      longitude={longitude}
+      setLongitude={setLongitude}
+      devs={devs}
+    />
+  )
 }
 
-export default App;
+export default App
