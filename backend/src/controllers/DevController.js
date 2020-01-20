@@ -44,7 +44,10 @@ async function store (req, res) {
         location,
       })
 
-      const sendSocketMessageTo = findConnections({ latitude, longitude }, techsList)
+      const sendSocketMessageTo = findConnections(
+        { latitude, longitude },
+        techsList
+      )
 
       sendMessage(sendSocketMessageTo, 'new-dev', dev)
     }

@@ -9,7 +9,7 @@ function setupWebsocket (server) {
   io = socketio(server)
 
   io.on('connection', (socket) => {
-    const { latitude, longitude, techs }= socket.handshake.query
+    const { latitude, longitude, techs } = socket.handshake.query
 
     connections.push({
       id: socket.id,
@@ -23,15 +23,23 @@ function setupWebsocket (server) {
 }
 
 function findConnections (coordinates, techs) {
-  const calculateDistance = connection => getDistanceFromLatLonInKm(coordinates, connection.coordinates) < 10
-  const thereIsSomeTech = connection => connection.techs.some(tech => techs.includes(tech))
-  const findedConnections = connections.filter(connection => calculateDistance(connection) && thereIsSomeTech(connection))
+  const calculateDistance = connection => (
+    getDistanceFromLatLonInKm(coordinates, connection.coordinates) < 10
+  )
+  const thereIsSomeTech = connection => (
+    connection.techs.some(tech => techs.includes(tech))
+  )
+  const findedConnections = (
+    connections.filter(connection => (
+      calculateDistance(connection) && thereIsSomeTech(connection)
+    ))
+  )
 
   return findedConnections
 }
 
-function sendMessage(to, message, data) {
-  to.forEach(connection => {
+function sendMessage (to, message, data) {
+  to.forEach((connection) => {
     io.to(connection.id).emit(message, data)
   })
 }
